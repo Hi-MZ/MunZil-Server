@@ -1,13 +1,13 @@
 package io.munzil.munzil.domain.feed.domain;
 
 import io.munzil.munzil.domain.like.domain.FeedLike;
+import io.munzil.munzil.domain.question.domain.FeedQuestion;
 import io.munzil.munzil.domain.user.domain.User;
 import io.munzil.munzil.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,6 +35,9 @@ public class Feed extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<FeedImage> feedImages;
+
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<FeedQuestion> feedQuestions;
 
     @Builder
     public Feed(String content, User user) {
