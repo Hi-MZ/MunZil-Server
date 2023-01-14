@@ -1,0 +1,67 @@
+server:
+  shutdown: graceful
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${JDBC_URL}?serverTimezone=Asia/Seoul
+    username: ${DB_USER}
+    password: ${DB_PWD}
+    hikari:
+      max-lifetime: 600000
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD}
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY:souso}
+  access-exp: ${JWT_ACCESS_EXP:7200}
+  refresh-exp: ${JWT_REFRESH_EXP:123456789}
+
+coolsms:
+  key: ${COOLSMS_API_KEY}
+  secret: ${COOLSMS_SECRET_KEY}
+  phone-number: ${COOLSMS_PHONE_NUMBER}
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${S3_BUCKET:souso-bucket}
+    region:
+      static: ${AWS_REGION:ap-northeast-2}
+    stack:
+      auto: false
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
