@@ -10,6 +10,7 @@ public class FeedConditionVO {
     private Long userId;
     private Long cursorId;
     private Integer pageId;
+    private Long questionId;
     private Long findUserId;
     private String orders;
 

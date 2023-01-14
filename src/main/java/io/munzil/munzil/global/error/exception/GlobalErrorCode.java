@@ -24,12 +24,15 @@ public enum GlobalErrorCode {
     FEED_NOT_FOUND(404, "Feed Not Found"),
     FEED_VIEW_COUNT_NOT_FOUND(404, "Feed View Count Not Found"),
     IMAGE_NOT_FOUND(404, "IMAGE_NOT_FOUND"),
-
+    QUESTION_NOT_FOUND(404, "Question Not Found"),
+    FOLLOW_NOT_FOUND(404, "No such Follow"),
 
     // 409
     ALREADY_USER_EXIST(409, "Already User Exist"),
     ALREADY_NICKNAME_EXIST(409, "Already Nickname Exist"),
     ALREADY_EMAIL_EXISTS(409, "Already Email Exist"),
+
+    FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
 
     // 500
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");

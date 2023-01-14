@@ -1,6 +1,7 @@
 package io.munzil.munzil.domain.feed.domain.repository.vo;
 
 import com.querydsl.core.annotations.QueryProjection;
+import io.munzil.munzil.domain.question.domain.repository.vo.QuestionVO;
 import io.munzil.munzil.domain.user.domain.repository.vo.AuthorVO;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class FeedDetailsVO {
 
+    private QuestionVO questionVO;
     private AuthorVO authorVO;
     private String content;
     private Long feedId;
@@ -19,8 +21,9 @@ public class FeedDetailsVO {
     private LocalDateTime createdAt;
 
     @QueryProjection
-    public FeedDetailsVO(AuthorVO authorVO, String content, Long feedId, Long likeCount,
+    public FeedDetailsVO(QuestionVO questionVO, AuthorVO authorVO, String content, Long feedId, Long likeCount,
                          Boolean isLike, LocalDateTime createdAt) {
+        this.questionVO = questionVO;
         this.authorVO = authorVO;
         this.content = content;
         this.feedId = feedId;

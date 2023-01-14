@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class UserSignUpRequest {
 
-    @NotBlank(message = "accountId은 Null, 공백, 띄어쓰기를 허용하지 않습니다.")
+    @NotBlank(message = "account_id은 Null, 공백, 띄어쓰기를 허용하지 않습니다.")
     private String accountId;
 
     @NotBlank(message = "password는 Null, 공백, 띄어쓰기를 허용하지 않습니다.")

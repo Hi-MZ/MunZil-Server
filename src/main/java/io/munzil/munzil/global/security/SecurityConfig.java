@@ -60,6 +60,14 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.PATCH, "/feeds/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/feeds/**").authenticated()
 
+                // question
+                .antMatchers(HttpMethod.GET, "/questions/**").authenticated()
+
+                // follower & following
+                .antMatchers(HttpMethod.GET, "/follows/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/follows/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/follows/**").authenticated()
+
                 // swagger
                 .antMatchers("/swagger*/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
 

@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.munzil.munzil.domain.feed.domain.repository.vo.FeedConditionVO;
 import io.munzil.munzil.domain.feed.domain.repository.vo.FeedDetailsVO;
+import io.munzil.munzil.domain.question.domain.repository.vo.QQuestionVO;
 import io.munzil.munzil.domain.feed.domain.repository.vo.QFeedDetailsVO;
 import io.munzil.munzil.domain.user.domain.repository.vo.QAuthorVO;
 import io.munzil.munzil.global.utils.code.PagingSupportUtil;
@@ -21,9 +22,10 @@ import org.springframework.data.domain.Slice;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.util.StringUtils.hasText;
 import static io.munzil.munzil.domain.feed.domain.QFeed.feed;
 import static io.munzil.munzil.domain.like.domain.QFeedLike.feedLike;
+import static io.munzil.munzil.domain.question.domain.QFeedQuestion.feedQuestion;
+import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
 public class FeedRepositoryImpl implements FeedRepositoryCustom {
@@ -62,6 +64,7 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
                 .distinct()
                 .where(
                         eqPage(feedConditionVO.getCursorId()),
+                        eqFeedQuestionQuestionId(feedConditionVO.getQuestionId()),
                         eqFeedUserId(feedConditionVO.getFindUserId())
                 )
                 .orderBy(ORDERS.toArray(OrderSpecifier[]::new));
@@ -73,6 +76,13 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
         return cursorId != null ? feed.id.lt(cursorId) : null;
     }
 
+    private BooleanExpression eqFeedQuestionFeedId(NumberPath<Long> id) {
+        return id != null ? feedQuestion.feed.id.eq(id) : null;
+    }
+
+    private BooleanExpression eqFeedQuestionQuestionId(Long id) {
+        return (id != null && id != 0) ? feedQuestion.question.id.eq(id) : null;
+    }
     private BooleanExpression eqFeedUserId(Long id) {
         return id != null ? feed.user.id.eq(id) : null;
     }
@@ -92,6 +102,10 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
     private JPAQuery<FeedDetailsVO> selectFromFeed(Long userId) {
         return query
                 .select(new QFeedDetailsVO(
+                        new QQuestionVO(
+                                feedQuestion.question.id,
+                                feedQuestion.question.questionName
+                        ),
                         new QAuthorVO(
                                 feed.user.id,
                                 feed.user.nickname,
@@ -109,6 +123,8 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
                         feed.createdAt
                 ))
                 .from(feed)
+                .leftJoin(feedQuestion)
+                .on(eqFeedQuestionFeedId(feed.id))
                 .leftJoin(feedLike)
                 .on(eqFeedLikeId(feed.id).and(eqFeedLikeUserId(userId)));
     }
