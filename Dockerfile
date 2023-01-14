@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jdk-slim
 COPY ./build/libs/*.jar app.jar
 ARG JDBC_URL
 ARG DB_USER
