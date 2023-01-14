@@ -11,4 +11,4 @@ public class AlreadyUserExistException extends MunZilException {
     private AlreadyUserExistException() {
         super(GlobalErrorCode.ALREADY_USER_EXIST);
     }
-}   
+}
